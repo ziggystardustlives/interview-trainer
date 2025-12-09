@@ -1,0 +1,654 @@
+/* ==============
+   Core variables
+   ============== */
+
+:root {
+  --bg-cream: #FEF7E9;
+  --text-dark: #020C1C;
+  --accent-orange: #FF7940;
+  --card-bg: #ffffff;
+  --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+}
+
+/* =========
+   Resets
+   ========= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Lato", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+}
+
+/* =========
+   Layout shell
+   ========= */
+
+.app-shell {
+  min-height: 100vh;
+  max-width: 420px;
+  margin: 0 auto;
+  background: var(--bg-cream);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* For landing: fully centered card */
+.app-shell--center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card-ish look on larger screens */
+@media (min-width: 768px) {
+  .app-shell {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+  }
+
+  .app-shell--center {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+/* =========
+   Typography
+   ========= */
+
+.heading,
+h1,
+h2,
+h3 {
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* =========
+   Buttons
+   ========= */
+
+button {
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 15px;   /* <-- Rounded rectangle (your design) */
+  font-size: 1rem;
+  font-weight: 500;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background-color 0.15s ease, opacity 0.15s ease;
+}
+
+
+.btn-primary {
+  background: var(--accent-orange);
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(255, 121, 64, 0.35);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(255, 121, 64, 0.45);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(255, 121, 64, 0.35);
+}
+
+.btn-record {
+  background: var(--accent-orange);
+  color: #ffffff;
+  padding-left: 32px;
+  padding-right: 32px;
+  margin-top: 24px;
+  font-weight: 600;
+}
+
+.btn-record::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background: #ff3b30; /* small red dot indicator */
+}
+
+/* =========
+   Header
+   ========= */
+
+/* HEADER: logo on top, hamburger under it */
+.app-header {
+  display: flex;
+  flex-direction: column;   /* stack vertically */
+  align-items: center;      /* center horizontally */
+  justify-content: flex-start;
+  padding: 16px 18px 0 18px;
+  gap: 8px;                 /* space between logo and hamburger */
+}
+
+/* header logo */
+.app-header__logo {
+  height: 90px;             /* tweak if you want bigger/smaller */
+  object-fit: contain;
+}
+
+.app-header__logo-link {
+  display: block;
+  text-decoration: none;
+}
+
+
+/* hamburger button under logo */
+.menu-toggle {
+  width: 32px;
+  height: 24px;
+  padding: 0;
+  margin: 0 0 4px 0;
+  border: none;
+  background: rgba(0, 0, 0, 0.05);  /* TEMP: light box so you can see it */
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+/* the three lines of the hamburger */
+.menu-toggle span {
+  display: block;
+  height: 2px;
+  width: 18px;
+  margin: 0 auto;
+  border-radius: 2px;
+  background: var(--text-dark);
+}
+
+
+/* =========
+   Landing screen
+   ========= */
+
+.landing {
+  text-align: center;
+  padding: 56px 24px;
+}
+
+.landing__logo {
+  width: 300px;
+  max-width: 100%;
+  margin: 0 auto 40px auto;
+  display: block;
+}
+
+.landing__cta {
+  margin-bottom: 16px;
+}
+
+.landing__url {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* =========
+   Practice screen
+   ========= */
+
+.practice {
+  flex: 1;
+  padding: 24px 24px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Base: practice screen can animate */
+.practice {
+  transition: transform 0.14s ease-out, opacity 0.14s ease-out;
+}
+
+/* Swipe left → slide out to the left */
+.practice--swipe-left {
+  transform: translateX(-40%);  /* tweak %, e.g. -60% if you want more movement */
+  opacity: 0;
+}
+
+/* Swipe right → slide out to the right */
+.practice--swipe-right {
+  transform: translateX(40%);
+  opacity: 0;
+}
+
+
+.practice__video-card {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+/* Square video card */
+.practice__video-card {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.practice__video-frame {
+  width: 100%;
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  aspect-ratio: 1 / 1;        /* square */
+}
+
+/* wrapper that holds video + overlay */
+.practice__video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* actual video */
+.practice__video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  background: #000;
+}
+/* Overlay covers the whole video and centers the button */
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  background: transparent;        /* No gradient now */
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+
+.video-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Big orange circular play button */
+.video-overlay__playbtn {
+  width: 100px;        /* adjust size here */
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(254, 247, 233, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* White play icon */
+.video-overlay__icon {
+  color: rgba(255, 121, 64, 0.85);
+font-size: 3rem;
+  font-weight: 700;
+  margin-left: 4px;   /* optical centering */
+}
+
+/* Kill any old pseudo-dot so we only see the real one */
+.btn-record::before {
+  content: none !important;
+}
+
+
+
+.practice__question-meta {
+  margin-top: 18px;
+}
+
+.practice__question-label {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+}
+/* Container for Record + Play buttons */
+.practice__controls {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;      /* stack vertically */
+  gap: 10px;
+  align-items: center;
+}
+
+/* Make both buttons same width */
+.practice__controls .btn,
+.practice__controls .btn-secondary,
+.practice__controls .btn-feedback {
+  width: 100%;
+  max-width: 320px;
+}
+
+
+/* Secondary (Play my answer) button */
+.btn-secondary {
+  padding: 14px 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(2, 12, 28, 0.10);
+  background: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #020C1C;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+.btn-feedback {
+  padding: 14px 24px;
+  border-radius: 18px;
+  border: none;
+  background: #FF7940;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.btn-feedback:disabled {
+  opacity: 0.35;
+  box-shadow: none;
+  cursor: default;
+}
+
+
+.btn-secondary:disabled {
+  opacity: 0.4;
+  box-shadow: none;
+  cursor: default;
+}
+
+/* Record button “active” state stays similar */
+.btn-record--active {
+  background: #e56329;   /* slightly darker orange while recording */
+}
+
+/* Single red dot on the Record button */
+.btn-record__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff3b30;
+  margin-right: 8px;
+}
+
+
+/* Status text under controls */
+.practice__record-status {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  color: rgba(2, 12, 28, 0.7);
+}
+
+/* =========
+   Feedback screen
+   ========= */
+
+.feedback {
+  flex: 1;
+  padding: 32px 24px 40px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.feedback__title {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 24px;
+}
+
+.feedback__card {
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  padding: 20px 18px;
+  box-shadow: var(--shadow-soft);
+  min-height: 180px;
+}
+
+.feedback__text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.feedback__next {
+  margin-top: 32px;
+  align-self: center;
+  min-width: 140px;
+}
+
+/* ===== MENU OVERLAY (dim background) ===== */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 40;
+}
+
+.menu-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* SIDE MENU PANEL – animated slide in from the left */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 72%;
+  max-width: 320px;
+  background: rgba(254, 247, 233, 0.94); /* same cream, slight transparency */
+box-shadow: 8px 0 25px rgba(0, 0, 0, 0.12);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+
+  /* hide it off-screen by default */
+  transform: translateX(-100%);
+  transition: transform 0.25s ease-out;
+}
+
+.side-menu.open {
+  transform: translateX(0);   /* JS adds .open → slide into view */
+}
+
+/* Reset list styles for actions + questions */
+.side-menu__actions,
+.side-menu__questions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Nice spacing between question links */
+.side-menu__questions li + li {
+  margin-top: 4px;
+}
+
+/* Style for Q1–Q14 links */
+.side-menu__questions a {
+  text-decoration: none;
+  color: var(--accent-orange);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.side-menu__questions a:hover {
+  text-decoration: underline;
+}
+
+.side-menu__question-link {
+  display: block;
+  padding: 4px 0;
+  text-decoration: none;
+}
+
+.side-menu__question-label {
+  display: inline-block;
+  margin-right: 4px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-orange);
+}
+
+.side-menu__question-text {
+  display: block;
+  font-family: "Lato", sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  color: rgba(2, 12, 28, 0.8);
+}
+
+
+.side-menu__link {
+  padding: 4px 0;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 0.95rem;
+  font-family: "Lato", sans-serif;
+  color: var(--text-dark);
+  cursor: pointer;
+}
+
+.side-menu__link--ghost {
+  opacity: 0.85;
+}
+
+.side-menu__inner {
+  padding: 16px 26px 24px 26px;  /* extra padding on left & right */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Centered feedback layout */
+.feedback {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Title */
+.feedback__heading {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  color: #020C1C;
+}
+
+/* Outer card */
+.feedback__card {
+  background: #F4EDE3; /* light cream-beige like your screenshot */
+  border-radius: 16px;
+  padding: 18px;
+  width: 85%;
+  max-width: 500px;
+  height: 260px;       /* fixed height so content scrolls */
+  margin: 0 auto 30px auto;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Scrollable area */
+.feedback__scroll {
+  height: 100%;
+  overflow-y: auto;
+  text-align: left;
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  color: #020C1C;
+  line-height: 1.5;
+  padding-right: 12px; /* space for scrollbar */
+}
+
+/* Custom scrollbar */
+.feedback__scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.feedback__scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.feedback__scroll::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 4px;
+}
+
+.feedback__scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.25);
+}
+
+/* Next button */
+.btn-next {
+  background: #EF8354;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  padding: 14px 28px;
+  border-radius: 15px;
+  width: 200px;
+  margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}

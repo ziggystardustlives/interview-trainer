@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Interview Trainer – Practice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Lato:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body data-page="practice">
+  <div class="app-shell">
+    <!-- HEADER -->
+    <header class="app-header">
+     <a href="index.html" class="app-header__logo-link">
+  <img src="images/it_logo 1.png" alt="Interview Trainer logo" class="app-header__logo" />
+</a>
+
+
+      <button class="menu-toggle" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <!-- MAIN CONTENT -->
+   <main class="practice">
+  <section class="practice__video-card">
+
+    <div class="practice__video-frame">
+      <div class="practice__video-wrapper" id="videoWrapper">
+
+        <video
+          id="questionVideo"
+          class="practice__video"
+          playsinline
+          preload="auto"
+        ></video>
+
+        <button class="video-overlay" id="videoPlayOverlay">
+          <div class="video-overlay__playbtn">
+            <span class="video-overlay__icon">▶</span>
+          </div>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="practice__question-meta">
+  <p id="questionLabel" class="practice__question-label">Q1</p>
+</div>
+
+<div class="practice__controls">
+  <button id="recordButton" class="btn btn-record">
+    <span class="btn-record__dot"></span>
+    <span id="recordLabel">Record</span>
+  </button>
+
+  <button id="playAnswerButton" class="btn btn-secondary" disabled>
+    Play my answer
+  </button>
+
+  <button id="getFeedbackButton" class="btn btn-feedback" disabled>
+    Get feedback
+  </button>
+</div>
+
+<p id="recordStatus" class="practice__record-status">
+  Tap <strong>Record</strong> to practise your answer.
+</p>
+
+
+  </section>
+</main>
+
+
+    <!-- SLIDE-OUT MENU -->
+    <div class="menu-overlay"></div>
+
+    <nav class="side-menu" aria-hidden="true">
+      <div class="side-menu__header">
+        <button class="menu-close" aria-label="Close menu">×</button>
+      </div>
+
+      <div class="side-menu__inner">
+        <ul class="side-menu__actions">
+          <li><button class="side-menu__link side-menu__link--ghost" data-action="restart">Restart</button></li>
+          <li><button class="side-menu__link side-menu__link--ghost" data-action="login">Login</button></li>
+          <li><button class="side-menu__link side-menu__link--ghost" data-action="credits">Credits</button></li>
+        </ul>
+
+        <hr class="side-menu__divider" />
+
+        <ul id="questionMenuList" class="side-menu__questions">
+          <!-- populated by app.js -->
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <!-- IMPORTANT: this must be exactly "app.js" in the same folder -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "name": "interview-trainer-backend",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "openai": "^4.0.0"
+  }
+}
