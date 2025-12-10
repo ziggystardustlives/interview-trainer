@@ -650,3 +650,21 @@ box-shadow: 8px 0 25px rgba(0, 0, 0, 0.12);
   margin: 0 auto;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
+/* ==== FORCE CONSISTENT BUTTON WIDTHS ON PRACTICE SCREEN ==== */
+
+.practice__controls {
+  width: 100%;
+  max-width: 360px;          /* tweak if you want slightly wider/narrower */
+  margin: 24px auto 0;       /* centres the whole block */
+}
+
+.practice__controls button,
+#recordButton,
+#playAnswerButton,
+#feedbackButton {
+  display: flex;              /* keep text centred */
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;     /* same width in ALL states */
+  box-sizing: border-box;
+}
