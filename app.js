@@ -93,6 +93,8 @@ const QUESTIONS = [
   },
 ];
 
+// ---------- helpers ----------
+
 function getQueryParam(name) {
   const params = new URLSearchParams(window.location.search);
   return params.get(name);
@@ -285,13 +287,8 @@ function initPracticePage() {
   const wrapper = document.getElementById("videoWrapper");
   const audioPlayer = document.getElementById("answerPlayer");
 
-  if (
-    !videoEl ||
-    !questionLabelEl ||
-    !recordButton ||
-    !overlay ||
-    !wrapper
-  ) {
+  if (!videoEl || !questionLabelEl || !recordButton || !overlay || !wrapper) {
+    console.warn("Practice page elements missing.");
     return;
   }
 
@@ -356,11 +353,13 @@ function initPracticePage() {
         stream.getTracks().forEach((t) => t.stop());
         recordedBlob = new Blob(recordedChunks, { type: recordedMimeType });
 
-        // Create / refresh object URL for playback using the <audio> element
-        if (audioPlayer.src) {
-          URL.revokeObjectURL(audioPlayer.src);
+        if (audioPlayer) {
+          if (audioPlayer.src) {
+            URL.revokeObjectURL(audioPlayer.src);
+          }
+          audioPlayer.src = URL.createObjectURL(recordedBlob);
+          audioPlayer.load();
         }
-        audioPlayer.src = URL.createObjectURL(recordedBlob);
 
         updateButtonsState();
         setStatus("Great! You can play your answer or get feedback.");
@@ -394,21 +393,23 @@ function initPracticePage() {
 
   if (playButton) {
     playButton.addEventListener("click", () => {
-      if (!recordedBlob) {
+      if (!recordedBlob || !audioPlayer || !audioPlayer.src) {
         setStatus("Please record your answer first.");
         return;
       }
 
       audioPlayer.currentTime = 0;
-      audioPlayer
-        .play()
-        .then(() => {
-          setStatus("Playing your answer…");
-        })
-        .catch((err) => {
-          console.error("Error playing answer:", err);
-          setStatus("Couldn't play your answer. Try recording again.");
-        });
+      const playPromise = audioPlayer.play();
+      if (playPromise && playPromise.then) {
+        playPromise
+          .then(() => {
+            setStatus("Playing your answer…");
+          })
+          .catch((err) => {
+            console.error("Error playing answer:", err);
+            setStatus("Couldn't play your answer. Try recording again.");
+          });
+      }
     });
   }
 
@@ -505,4 +506,38 @@ function initFeedbackPage() {
     } catch (err) {
       console.error("Error parsing stored feedback:", err);
       textEl.textContent =
-        "Sorry, we couldn't load your feedback. Please record your answer again
+        "Sorry, we couldn't load your feedback. Please record your answer again.";
+    }
+  } else {
+    textEl.textContent =
+      "No feedback found for this question. Please go back, record your answer, and tap Get feedback.";
+  }
+
+  nextButton.addEventListener("click", () => {
+    const isLast = index === QUESTIONS.length - 1;
+    const nextIndex = isLast ? 0 : index + 1;
+    const nextQuestion = QUESTIONS[nextIndex];
+    window.location.href = `practice.html?question=${nextQuestion.id}`;
+  });
+}
+
+// ==================
+// Bootstrapping
+// ==================
+
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM ready");
+
+  setupSlideMenu();
+  buildQuestionMenuList();
+
+  const pageType = document.body.dataset.page;
+
+  if (pageType === "practice") {
+    initPracticePage();
+  }
+
+  if (pageType === "feedback") {
+    initFeedbackPage();
+  }
+});
