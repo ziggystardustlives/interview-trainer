@@ -310,14 +310,14 @@ button {
 }
 
 .video-overlay__circle {
-  width: 140px;
-  height: 140px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  background: rgba(254, 247, 233, 0.9); /* cream with a bit of transparency */
+  background: rgba(254, 247, 233, 0.75); /* cream with a bit of transparency */
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 .video-overlay__triangle {
@@ -357,13 +357,14 @@ button {
   align-items: center;
 }
 
-/* Make both buttons same width */
+/* Make all action buttons on the practice screen full-width */
+.practice__controls button,
 .practice__controls .btn,
-.practice__controls .btn-secondary,
-.practice__controls .btn-feedback {
+.practice__controls .btn-secondary {
   width: 100%;
-  max-width: 320px;
+  box-sizing: border-box;
 }
+
 
 
 /* Secondary (Play my answer) button */
