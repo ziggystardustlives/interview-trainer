@@ -319,7 +319,8 @@ function initPracticePage() {
   let recordedChunks = [];
   let recordedBlob = null;
   let recordedMimeType = "audio/webm";
-  const audioPlayer = new Audio();
+  const audioPlayer = document.getElementById("answerPlayer");
+
 
   function setStatus(text) {
     if (statusEl) statusEl.textContent = text;
