@@ -13,11 +13,7 @@
   <div class="app-shell">
     <!-- HEADER -->
     <header class="app-header">
-     <a href="index.html" class="app-header__logo-link">
-  <img src="images/it_logo 1.png" alt="Interview Trainer logo" class="app-header__logo" />
-</a>
-
-
+      <img src="images/it_logo 1.png" alt="Interview Trainer logo" class="app-header__logo" />
       <button class="menu-toggle" aria-label="Open menu">
         <span></span>
         <span></span>
@@ -26,68 +22,67 @@
     </header>
 
     <!-- MAIN CONTENT -->
-   <main class="practice">
-  <section class="practice__video-card">
+    <main class="practice">
+      <section class="practice__video-card">
+        <div class="practice__video-frame">
+          <div class="practice__video-wrapper" id="videoWrapper">
 
-    <div class="practice__video-frame">
-      <div class="practice__video-wrapper" id="videoWrapper">
+            <video
+              id="questionVideo"
+              class="practice__video"
+              playsinline
+              preload="auto"
+            >
+              <!-- src is set by app.js -->
+            </video>
 
-        <video
-          id="questionVideo"
-          class="practice__video"
-          playsinline
-          preload="auto"
-        ></video>
+            <!-- overlay play button -->
+            <button class="video-overlay" id="videoPlayOverlay" aria-label="Play question video">
+              <div class="video-overlay__circle">
+                <span class="video-overlay__triangle"></span>
+              </div>
+            </button>
 
-        <button class="video-overlay" id="videoPlayOverlay">
-          <div class="video-overlay__playbtn">
-            <span class="video-overlay__icon">▶</span>
           </div>
-        </button>
+        </div>
 
-      </div>
-    </div>
+        <!-- QUESTION LABEL -->
+        <div class="practice__question-meta">
+          <p id="questionLabel" class="practice__question-label">Q1</p>
+        </div>
 
-      <!-- QUESTION LABEL -->
-      <div class="practice__question-meta">
-        <p id="questionLabel" class="practice__question-label">Q1</p>
-      </div>
+        <!-- CONTROLS -->
+        <section class="practice__controls">
+          <button id="recordButton" class="btn btn-record">
+            <span class="record-dot"></span>
+            Record
+          </button>
 
-      <!-- CONTROLS -->
-     <section class="practice__controls">
+          <button
+            id="playAnswerButton"
+            class="btn btn-secondary"
+            disabled
+          >
+            Play my answer
+          </button>
 
-  <button id="recordButton" class="btn btn-record">
-    <span class="record-dot"></span>
-    Record
-  </button>
+          <button
+            id="feedbackButton"
+            class="btn btn-secondary btn-secondary--accent"
+            disabled
+          >
+            Get feedback
+          </button>
 
-  <button
-    id="playAnswerButton"
-    class="btn btn-secondary"
-    disabled
-  >
-    Play my answer
-  </button>
+          <!-- Hidden audio element for playback -->
+          <audio id="answerPlayer" style="display:none;"></audio>
 
-  <button
-    id="feedbackButton"
-    class="btn btn-secondary btn-secondary--accent"
-    disabled
-  >
-    Get feedback
-  </button>
-
-  <!-- Hidden audio player used for playback -->
-  <audio id="answerPlayer" style="display:none;"></audio>
-
-  <p id="practiceStatus" class="practice__status">
-    Tap <strong>Record</strong> to practise your answer.
-  </p>
-</section>
-
-
-</main>
-
+          <p id="practiceStatus" class="practice__status">
+            Tap <strong>Record</strong> to practise your answer.
+          </p>
+        </section>
+      </section>
+    </main>
 
     <!-- SLIDE-OUT MENU -->
     <div class="menu-overlay"></div>
@@ -113,7 +108,6 @@
     </nav>
   </div>
 
-  <!-- IMPORTANT: this must be exactly "app.js" in the same folder -->
   <script src="app.js"></script>
 </body>
 </html>
