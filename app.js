@@ -290,8 +290,7 @@ function initPracticePage() {
     !questionLabelEl ||
     !recordButton ||
     !overlay ||
-    !wrapper ||
-    !audioPlayer
+    !wrapper
   ) {
     return;
   }
