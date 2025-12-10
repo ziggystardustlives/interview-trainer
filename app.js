@@ -226,11 +226,9 @@ function setupSwipeNavigation(currentQuestion) {
     if (currentIndex === -1) return;
 
     if (deltaX < 0 && currentIndex < QUESTIONS.length - 1) {
-      // swipe left → next question
       const nextQuestion = QUESTIONS[currentIndex + 1];
       navigateWithSlide(nextQuestion.id, "left");
     } else if (deltaX > 0 && currentIndex > 0) {
-      // swipe right → previous question
       const prevQuestion = QUESTIONS[currentIndex - 1];
       navigateWithSlide(prevQuestion.id, "right");
     }
@@ -319,8 +317,7 @@ function initPracticePage() {
   let recordedChunks = [];
   let recordedBlob = null;
   let recordedMimeType = "audio/webm";
-  const audioPlayer = document.getElementById("answerPlayer");
-
+  let playbackUrl = null; // URL for playback
 
   function setStatus(text) {
     if (statusEl) statusEl.textContent = text;
@@ -356,7 +353,13 @@ function initPracticePage() {
       mediaRecorder.onstop = () => {
         stream.getTracks().forEach((t) => t.stop());
         recordedBlob = new Blob(recordedChunks, { type: recordedMimeType });
-        audioPlayer.src = URL.createObjectURL(recordedBlob);
+
+        // Create / refresh object URL for playback
+        if (playbackUrl) {
+          URL.revokeObjectURL(playbackUrl);
+        }
+        playbackUrl = URL.createObjectURL(recordedBlob);
+
         updateButtonsState();
         setStatus("Great! You can play your answer or get feedback.");
       };
@@ -389,11 +392,21 @@ function initPracticePage() {
 
   if (playButton) {
     playButton.addEventListener("click", () => {
-      if (!recordedBlob) return;
-      audioPlayer.currentTime = 0;
-      audioPlayer.play().catch((err) => {
-        console.error("Error playing answer:", err);
-      });
+      if (!recordedBlob || !playbackUrl) {
+        setStatus("Please record your answer first.");
+        return;
+      }
+      const audio = new Audio(playbackUrl);
+      audio.currentTime = 0;
+      audio
+        .play()
+        .then(() => {
+          setStatus("Playing your answer…");
+        })
+        .catch((err) => {
+          console.error("Error playing answer:", err);
+          setStatus("Couldn't play your answer. Try recording again.");
+        });
     });
   }
 
@@ -431,7 +444,6 @@ function initPracticePage() {
 
         const data = await response.json();
 
-        // Store feedback + transcript in localStorage
         const storageKey = `feedback_${currentQuestion.id}`;
         localStorage.setItem(
           storageKey,
@@ -441,7 +453,6 @@ function initPracticePage() {
           })
         );
 
-        // Go to feedback page for this question
         window.location.href = `feedback.html?question=${currentQuestion.id}`;
       } catch (err) {
         console.error("Error getting feedback:", err);
@@ -476,7 +487,6 @@ function initFeedbackPage() {
 
   headingEl.textContent = `${currentQuestion.label} Feedback`;
 
-  // Load feedback from localStorage
   const storageKey = `feedback_${currentQuestion.id}`;
   const stored = localStorage.getItem(storageKey);
 
@@ -484,17 +494,12 @@ function initFeedbackPage() {
     try {
       const parsed = JSON.parse(stored);
       const html = parsed.feedbackHtml || "";
-      const transcript = parsed.transcript || "";
-
       if (html.trim()) {
         textEl.innerHTML = html;
       } else {
         textEl.textContent =
           "We couldn't generate detailed feedback this time. Please try again.";
       }
-
-      // (Optional) you could also show transcript somewhere else on the page.
-      // For now we just ignore it visually.
     } catch (err) {
       console.error("Error parsing stored feedback:", err);
       textEl.textContent =
