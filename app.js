@@ -304,7 +304,7 @@ function initPracticePage() {
     overlay.classList.add("hidden");
     videoEl.currentTime = 0;
     videoEl.play().catch((err) => {
-      console.log("Play failed:", err);
+      console.log("Question video play failed:", err);
     });
   };
 
@@ -339,9 +339,28 @@ function initPracticePage() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       recordedChunks = [];
-      mediaRecorder = new MediaRecorder(stream);
 
-      recordedMimeType = mediaRecorder.mimeType || "audio/webm";
+      // Prefer iPhone-friendly format
+      let options = {};
+      try {
+        if (window.MediaRecorder && MediaRecorder.isTypeSupported) {
+          if (MediaRecorder.isTypeSupported("audio/mp4")) {
+            options.mimeType = "audio/mp4";
+          } else if (MediaRecorder.isTypeSupported("audio/webm")) {
+            options.mimeType = "audio/webm";
+          }
+        }
+      } catch (e) {
+        console.warn("MediaRecorder.isTypeSupported check failed:", e);
+      }
+
+      mediaRecorder = new MediaRecorder(stream, options);
+      recordedMimeType =
+        mediaRecorder.mimeType ||
+        options.mimeType ||
+        "audio/webm";
+
+      console.log("Using mimeType for recording:", recordedMimeType);
 
       mediaRecorder.ondataavailable = (e) => {
         if (e.data && e.data.size > 0) {
@@ -407,8 +426,17 @@ function initPracticePage() {
           })
           .catch((err) => {
             console.error("Error playing answer:", err);
-            setStatus("Couldn't play your answer. Try recording again.");
+            const name = err && err.name ? err.name : "";
+            const msg = err && err.message ? err.message : "";
+            setStatus(
+              name || msg
+                ? `Playback error: ${name} ${msg}`.trim()
+                : "Couldn't play your answer. Try recording again."
+            );
           });
+      } else {
+        // Older browsers that return no promise
+        setStatus("Playing your answer…");
       }
     });
   }
