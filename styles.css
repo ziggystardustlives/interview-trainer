@@ -282,31 +282,26 @@ button {
 /* wrapper that holds video + overlay */
 .practice__video-wrapper {
   position: relative;
-  width: 100%;
-  height: 100%;
 }
 
-/* actual video */
 .practice__video {
   width: 100%;
   height: 100%;
   display: block;
+  border-radius: 24px;
   object-fit: cover;
-  background: #000;
 }
-/* Overlay covers the whole video and centers the button */
+
 .video-overlay {
   position: absolute;
   inset: 0;
-  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
-  padding: 0;
-  background: transparent;        /* No gradient now */
+  background: transparent;
   cursor: pointer;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.2s ease;
 }
 
 .video-overlay.hidden {
@@ -314,25 +309,27 @@ button {
   pointer-events: none;
 }
 
-/* Big orange circular play button */
-.video-overlay__playbtn {
-  width: 100px;        /* adjust size here */
-  height: 100px;
+.video-overlay__circle {
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
-  background: rgba(254, 247, 233, 0.75);
+  background: rgba(254, 247, 233, 0.9); /* cream with a bit of transparency */
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* White play icon */
-.video-overlay__icon {
-  color: rgba(255, 121, 64, 0.85);
-font-size: 3rem;
-  font-weight: 700;
-  margin-left: 4px;   /* optical centering */
+.video-overlay__triangle {
+  width: 0;
+  height: 0;
+  border-left: 26px solid #ff7940;   /* accent orange */
+  border-top: 16px solid transparent;
+  border-bottom: 16px solid transparent;
+  margin-left: 6px;
 }
+
+
 
 /* Kill any old pseudo-dot so we only see the real one */
 .btn-record::before {
