@@ -13,6 +13,10 @@
   --radius-pill: 999px;
 }
 
+.app-header__logo-link {
+  display: inline-block;
+  text-decoration: none;
+}
 /* =========
    Resets
    ========= */
