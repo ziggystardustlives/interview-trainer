@@ -48,31 +48,44 @@
       </div>
     </div>
 
-    <div class="practice__question-meta">
-  <p id="questionLabel" class="practice__question-label">Q1</p>
-</div>
+      <!-- QUESTION LABEL -->
+      <div class="practice__question-meta">
+        <p id="questionLabel" class="practice__question-label">Q1</p>
+      </div>
 
-<div class="practice__controls">
-  <button id="recordButton" class="btn btn-record">
-    <span class="btn-record__dot"></span>
-    <span id="recordLabel">Record</span>
-  </button>
+      <!-- CONTROLS -->
+      <section class="practice__controls">
 
-  <button id="playAnswerButton" class="btn btn-secondary" disabled>
-    Play my answer
-  </button>
+        <!-- Record button -->
+        <button id="recordButton" class="btn btn-record">
+          <span class="record-dot"></span>
+          Record
+        </button>
 
-  <button id="getFeedbackButton" class="btn btn-feedback" disabled>
-    Get feedback
-  </button>
-</div>
+        <!-- Play my answer -->
+        <button
+          id="playAnswerButton"
+          class="btn btn-secondary"
+          disabled
+        >
+          Play my answer
+        </button>
 
-<p id="recordStatus" class="practice__record-status">
-  Tap <strong>Record</strong> to practise your answer.
-</p>
+        <!-- Get feedback -->
+        <button
+          id="feedbackButton"
+          class="btn btn-secondary btn-secondary--accent"
+          disabled
+        >
+          Get feedback
+        </button>
 
+        <!-- Status text -->
+        <p id="practiceStatus" class="practice__status">
+          Tap <strong>Record</strong> to practise your answer.
+        </p>
+      </section>
 
-  </section>
 </main>
 
 
