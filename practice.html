@@ -54,40 +54,37 @@
       </div>
 
       <!-- CONTROLS -->
-      <section class="practice__controls">
+     <section class="practice__controls">
 
-        <!-- Record button -->
-        <button id="recordButton" class="btn btn-record">
-          <span class="record-dot"></span>
-          Record
-        </button>
+  <button id="recordButton" class="btn btn-record">
+    <span class="record-dot"></span>
+    Record
+  </button>
 
-        <!-- Play my answer -->
-        <button
-          id="playAnswerButton"
-          class="btn btn-secondary"
-          disabled
-        >
-          Play my answer
-        </button>
-        
+  <button
+    id="playAnswerButton"
+    class="btn btn-secondary"
+    disabled
+  >
+    Play my answer
+  </button>
 
+  <button
+    id="feedbackButton"
+    class="btn btn-secondary btn-secondary--accent"
+    disabled
+  >
+    Get feedback
+  </button>
 
-        <!-- Get feedback -->
-        <button
-          id="feedbackButton"
-          class="btn btn-secondary btn-secondary--accent"
-          disabled
-        >
-          Get feedback
-        </button>
+  <!-- Hidden audio player used for playback -->
+  <audio id="answerPlayer" style="display:none;"></audio>
 
-        
-        <!-- Status text -->
-        <p id="practiceStatus" class="practice__status">
-          Tap <strong>Record</strong> to practise your answer.
-        </p>
-      </section>
+  <p id="practiceStatus" class="practice__status">
+    Tap <strong>Record</strong> to practise your answer.
+  </p>
+</section>
+
 
 </main>
 
